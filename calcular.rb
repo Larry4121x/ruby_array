@@ -16,9 +16,22 @@ class Calcular
   end
 end
 
-print "Ingrese un número: "
-numero = gets.chomp.to_i
+def obtener_numero
+  print "Ingrese un número: "
+  numero = gets.chomp
+  if numero.match?(/^\d+$/)
+    numero.to_i
+  else
+    puts "Por favor, ingrese un número válido."
+    obtener_numero
+  end
+end
 
-calculadora = Calcular.new(numero)
-puts "La suma de los números PARES de #{numero} es #{calculadora.suma_pares}"
-puts "La suma de los números IMPARES de #{numero} es #{calculadora.suma_impares}"
+begin
+  numero = obtener_numero
+  calculadora = Calcular.new(numero)
+  puts "La suma de los números PARES de #{numero} es #{calculadora.suma_pares}"
+  puts "La suma de los números IMPARES de #{numero} es #{calculadora.suma_impares}"
+rescue StandardError => e
+  puts "Ocurrió un error: #{e.message}"
+end
