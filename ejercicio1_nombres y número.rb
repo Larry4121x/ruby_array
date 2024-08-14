@@ -14,11 +14,17 @@ end
 
 # Solicitar el nombre al usuario
 print "Ingrese un nombre: "
-nombre_ingresado = gets.chomp.capitalize
+nombre_ingresado = gets.chomp
 
-# Validar si el nombre existe en el hash
-if contactos.key?(nombre_ingresado)
-  puts "El número de celular de #{nombre_ingresado} es #{contactos[nombre_ingresado]}"
+# Normalizar el nombre ingresado a minúsculas
+nombre_normalizado = nombre_ingresado.downcase
+
+# Buscar el nombre en el hash, ignorando mayúsculas y minúsculas
+contacto_encontrado = contactos.find { |nombre, _| nombre.downcase == nombre_normalizado }
+
+if contacto_encontrado
+  nombre, celular = contacto_encontrado
+  puts "El número de celular de #{nombre} es #{celular}"
 else
   puts "El nombre no existe en la lista de contactos."
 end
