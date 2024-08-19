@@ -1,37 +1,24 @@
-class Calcular
-  def initialize(numero)
-    @numero = numero
+class Calcular_numeros
+  def self.pares(num)
+    (1..num).select(&:even?).sum
   end
 
-  def suma_pares
-    suma = 0
-    @numero.to_s.each_char { |char| suma += char.to_i if char.to_i.even? }
-    suma
-  end
-
-  def suma_impares
-    suma = 0
-    @numero.to_s.each_char { |char| suma += char.to_i if char.to_i.odd? }
-    suma
+  def self.impares(num)
+    (1..num).select(&:odd?).sum
   end
 end
 
-def obtener_numero
-  print "Ingrese un número: "
-  numero = gets.chomp
-  if numero.match?(/^\d+$/)
-    numero.to_i
-  else
-    puts "Por favor, ingrese un número válido."
-    obtener_numero
-  end
-end
+loop do
+  print "\nIngrese el número máximo a sumar: "
+  num = gets.to_i
 
-begin
-  numero = obtener_numero
-  calculadora = Calcular.new(numero)
-  puts "La suma de los números PARES de #{numero} es #{calculadora.suma_pares}"
-  puts "La suma de los números IMPARES de #{numero} es #{calculadora.suma_impares}"
-rescue StandardError => e
-  puts "Ocurrió un error: #{e.message}"
+  pares = Calcular_numeros.pares(num)
+  impares = Calcular_numeros.impares(num)
+
+  puts "La suma de los números PARES de #{num} es: #{pares}"
+  puts "La suma de los números IMPARES de #{num} es: #{impares}"
+  
+  print "\n¿Desea realizar otra operación? (s/n): "
+  seguir = gets.chomp.downcase
+  break if seguir != 's'
 end
